@@ -1,6 +1,11 @@
 ---
-name: Installing nginx and website
-become: yes
-hosts:  all
-task:
-  - name:
+  - name: Installing nginx and website
+    become: yes
+    hosts: all
+    tasks:  # Changed from "task" to "tasks"
+      - name: Install and update nginx
+        ansible.builtin.apt:
+          name: nginx
+          update_cache: true
+          state: present
+  
