@@ -1,0 +1,6 @@
+---
+name: Installing nginx and website
+become: yes
+hosts:  all
+task:
+  - name:
