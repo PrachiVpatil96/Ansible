@@ -1,0 +1,13 @@
+---
+- name: Installing Website
+  become: no
+  hosts: yes
+  tasks:
+    - name: Install the Website
+      ansible.builtin.get_url:
+        url: https://www.free-css.com/assets/files/free-css-templates/download/page296/oxer.zip
+        dest: /tmp/oxer.zip
+    - name: Unzip the folder
+      ansible.builtin.unarchive:
+        src: /tmp/oxer.zip
+        dest: /tmp/oxer
