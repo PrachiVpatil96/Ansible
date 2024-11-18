@@ -16,12 +16,7 @@
         url: https://www.free-css.com/assets/files/free-css-templates/download/page295/antique-cafe.zip
         dest: /tmp/antique-cafe.zip
     
-    - name: Ensure the destination directory exists
-      ansible.builtin.file:
-        path: /tmp/antique-cafe/
-        state: directory
-        mode: '0755'
-
+    
     - name: Unzip website
       ansible.builtin.unarchive:
         remote_src: true
@@ -29,7 +24,12 @@
         dest: /tmp/antique-cafe/
 
     - name: Move website to the correct directory
-      ansible.builtin.copy:
-        remote_src: true
-        src: /tmp/antique-cafe/
-        dest: /var/www/html/cafe
+      ansible.builtin.command:
+        cmd: mv /tmp/antique-cafe/* /var/www/html/cafe
+
+    
+    - name: Set permissions for the website directory
+      ansible.builtin.file:
+        path: /var/www/html/cafe
+        state: directory
+        mode: '0755'
