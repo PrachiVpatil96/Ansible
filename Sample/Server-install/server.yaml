@@ -1,0 +1,14 @@
+---
+- name: Installing php and Apache
+  become: yes
+  hosts: all
+  tasks:
+    - name: Installing Php and Apache
+      ansible.builtin.package:
+        name:
+          - php
+          - apache2
+          - libapache2-mod-php
+          - php-mysql
+        state: present
+        update_cache: true
