@@ -22,7 +22,7 @@
         remote_src: true
         src: /tmp/antique-cafe.zip
         dest: /tmp
-        remote_src: yes
+
 
     - name: copy to cafe
       ansible.builtin.copy:
