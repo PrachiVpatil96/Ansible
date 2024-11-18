@@ -21,15 +21,12 @@
       ansible.builtin.unarchive:
         remote_src: true
         src: /tmp/antique-cafe.zip
-        dest: /tmp/antique-cafe/
+        dest: /tmp
+        remote_src: yes
 
-    - name: Move website to the correct directory
-      ansible.builtin.command:
-        cmd: mv /tmp/antique-cafe/* /var/www/html/cafe
-
-    
-    - name: Set permissions for the website directory
-      ansible.builtin.file:
-        path: /var/www/html/cafe
-        state: directory
-        mode: '0755'
+    - name: copy to cafe
+      ansible.builtin.copy:
+        src: /tmp/2126_antique_cafe/
+        dest: /var/www/html/cafe
+        remote_src: true
+        
