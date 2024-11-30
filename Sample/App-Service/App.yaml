@@ -1,0 +1,36 @@
+---
+- name: Deploying Spring Boot Application using Ansible
+  become: yes
+  gather_facts: yes
+  hosts: [app-server]
+  tasks:
+    - name: Ensure the OS is Ubuntu
+      ansible.builtin.fail:
+        msg: "Don't run the application if the distribution is not Ubuntu."
+      when: ansible_facts['distribution'] != 'Ubuntu'
+
+    - name: Install JDK 17
+      ansible.builtin.apt:
+        name: openjdk-17-jdk
+        update_cache: true
+        state: present
+
+    - name: Add a user 'spc'
+      ansible.builtin.user:
+        create_home: true
+        home: /var/lib/spc
+        name: spc
+        shell: /bin/sh
+        state: present
+
+    - name: Download the JAR file
+      ansible.builtin.get_url:
+        url: https://pet-clinic-bucket.s3.ap-south-1.amazonaws.com/spring-petclinic-3.2.0-SNAPSHOT.jar
+        dest: /var/lib/spc/spring-petclinic-3.2.0-SNAPSHOT.jar
+
+    - name: Enable the daemon, enable and start spc service
+      ansible.builtin.systemd:
+        name: spc
+        daemon_reload: yes
+        enabled: yes
+        state: started
