@@ -1,0 +1,12 @@
+[Unit]
+Description=A Spring Boot application
+After=syslog.target
+
+[Service]
+User=spc
+ExecStart=/usr/bin/java -jar /var/lib/spc/spring-petclinic-3.2.0-SNAPSHOT.jar
+SuccessExitStatus=143
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
